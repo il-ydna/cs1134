@@ -8,11 +8,11 @@ def copy_linked_list(lnk_lst):
 
 def deep_copy_linked_list(lnk_lst):
     def dcll_helper(l_lst, res_lst):
-        next_datum = l_lst.next.data
-        if isinstance(next_datum, int):
-            res_lst.add_last(next_datum)
+        if isinstance(l_lst, int):
+            return l_lst
         else:   # l_lst.next.data is another linked list
-            res_lst.add_last()
+            dcll_helper(l_lst.data, res_lst)
+
 
 
 lnk_lst1 = DoublyLinkedList()

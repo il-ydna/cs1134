@@ -1,5 +1,5 @@
 from DoublyLinkedList import DoublyLinkedList
-
+import copy
 def merge_linked_lists(srt_lnk_lst1, srt_lnk_lst2):
     def merge_sublists(sublist1, sublist2, res_lst):
         if len(sublist1) == 0 and len(sublist2) == 0:
@@ -18,7 +18,9 @@ def merge_linked_lists(srt_lnk_lst1, srt_lnk_lst2):
             res_lst.add_last(next_node)
             merge_sublists(sublist1, sublist2, res_lst)
             return res_lst
-    return merge_sublists(srt_lnk_lst1, srt_lnk_lst2, DoublyLinkedList())
+    sll1 = copy.deepcopy(srt_lnk_lst1)
+    sll2 = copy.deepcopy(srt_lnk_lst2)
+    return merge_sublists(sll1, sll2, DoublyLinkedList())
 
 sll1 = DoublyLinkedList()
 sll1.add_last(1)
@@ -34,3 +36,4 @@ sll2.add_last(10)
 sll2.add_last(15)
 sll2.add_last(18)
 print(merge_linked_lists(sll1, sll2))
+print(sll1)

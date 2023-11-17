@@ -17,8 +17,10 @@ class CompactString:
 
     def __add__(self, other):
         res_str = CompactString(" ")
-        res_str.data_list = self.data_list
-
+        #res_str.data_list = self.data_list
+        res_str.data_list.delete_first()
+        for elem in self.data_list:
+            res_str.data_list.add_last(elem)
         self_last = self.data_list.trailer.prev
         other_first = other.data_list.header.next
 
@@ -30,12 +32,13 @@ class CompactString:
                 check = False
             else:
                 res_str.data_list.add_last(elem)
+
         return res_str
 
     def lex_val(self):
         lex_val = 0
         for tup in self.data_list:
-            lex_val += ord(tup[0]) * tup[1]
+            lex_val += 1
         return lex_val
     def __lt__(self, other):
         self_lex_val = self.lex_val()
@@ -52,7 +55,7 @@ class CompactString:
         other_lex_val = other.lex_val()
         return self_lex_val > other_lex_val
 
-    def __gt__(self, other):
+    def __ge__(self, other):
         self_lex_val = self.lex_val()
         other_lex_val = other.lex_val()
         return self_lex_val >= other_lex_val
@@ -63,9 +66,6 @@ class CompactString:
             res_str += tup[0] * tup[1]
         return res_str
 
-cs1 = CompactString("ab")
-cs2 = CompactString("b")
-print(cs1 <= cs2)
-print(cs1 >= cs2)
-print(cs1)
-print(cs2)
+cs1 = CompactString("aaaaabbbaaac")
+cs2 = CompactString("aaaaaaacccaaaa")
+print(cs2.lex_val() < cs1.lex_val())

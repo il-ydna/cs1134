@@ -6,26 +6,37 @@ def copy_linked_list(lnk_lst):
         res_lst.add_last(val)
     return res_lst
 
+# def deep_copy_linked_list(lnk_lst):
+#     res_lst = DoublyLinkedList()
+#     for i in lnk_lst:
+#         if isinstance(i, int):
+#             res_lst.add_last(i)
+#         else:
+#             new_lst = DoublyLinkedList()
+#             for j in i:
+#                 new_lst.add_last(j)
+#             res_lst.add_last(new_lst)
+#     return res_lst
+
 def deep_copy_linked_list(lnk_lst):
-    def dcll_helper(l_lst, res_lst):
-        if isinstance(l_lst, int):
-            return l_lst
-        else:   # l_lst.next.data is another linked list
-            dcll_helper(l_lst.data, res_lst)
+    print(lnk_lst)
+    def deep_copy_helper(l_list, res_lst):
+        if l_list.data is None:
+            return
+        else:
+            new_lst = DoublyLinkedList()
 
-
-
-lnk_lst1 = DoublyLinkedList()
-elem1 = DoublyLinkedList()
-elem1.add_last(1)
-elem1.add_last(2)
-lnk_lst1.add_last(elem1)
-elem2 = 3
-lnk_lst1.add_last(elem2)
-lnk_lst2 = deep_copy_linked_list(lnk_lst1)
-e1 = lnk_lst1.header.next
-e1_1 = e1.data.header.next
-e1_1.data = 10
-e2 = lnk_lst2.header.next
-e2_1 = e2.data.header.next
-print(e2_1.data)
+            if isinstance(l_list.data, int):
+                res_lst.add_last(l_list.data)
+                print(res_lst)
+            elif len(l_list.data) == 0:
+                empty = DoublyLinkedList()
+                res_lst.add_last(empty)
+            else:
+                res_lst.add_last(deep_copy_helper(l_list.data.header.next, new_lst))
+            deep_copy_helper(l_list.next, res_lst)
+            return res_lst
+    node = lnk_lst.header.next
+    res = deep_copy_helper(node, DoublyLinkedList())
+    print(res)
+    return res
